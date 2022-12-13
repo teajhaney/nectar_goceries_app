@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "761589954892",
+    "project_id": "nectar-groceries-app",
+    "storage_bucket": "com.example.nectar.groceries.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761589954892:android:4ed0ab42e8b9c3d924b7e9",
+        "android_client_info": {
+          "package_name": "com.example.nectar.groceries.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761589954892-kt09angkrb80kisci41noog2bijj405l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQFitrLIOd-CFSv5HVR21urSliiT-DYgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761589954892-kt09angkrb80kisci41noog2bijj405l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "761589954892-6jbh6b2bav9l8agnvunsk86pjk8fbc43.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nectar.groceries.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
