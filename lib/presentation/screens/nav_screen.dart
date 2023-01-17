@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import '/presentation/constants/constants.dart';
-import '/presentation/screens/screens.dart';
+import '/all_path.dart';
 
 class NavScreen extends StatefulWidget {
   const NavScreen({Key? key}) : super(key: key);
@@ -28,41 +26,43 @@ class _NavScreenState extends State<NavScreen> {
   var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: _screens[_currentIndex],
-        bottomNavigationBar: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          ),
-          child: Theme(
-            data: ThemeData(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
+    return SafeArea(
+      child: Scaffold(
+          body: _screens[_currentIndex],
+          bottomNavigationBar: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
             ),
-            child: SizedBox(
-              height: AppSize.s70,
-              child: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  backgroundColor: ColorManager.white,
-                  elevation: 3,
-                  items: _icons
-                      .map((title, icon) => MapEntry(
-                          title,
-                          BottomNavigationBarItem(
-                            icon: Icon(icon, size: 30.0),
-                            label: title,
-                          )))
-                      .values
-                      .toList(),
-                  currentIndex: _currentIndex,
-                  selectedItemColor: ColorManager.green,
-                  selectedFontSize: FontSize.fs12,
-                  unselectedFontSize: FontSize.fs12,
-                  unselectedItemColor: ColorManager.black,
-                  onTap: (index) => setState(() => _currentIndex = index)),
+            child: Theme(
+              data: ThemeData(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: SizedBox(
+                height: AppSize.s70,
+                child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: ColorManager.white,
+                    elevation: 3,
+                    items: _icons
+                        .map((title, icon) => MapEntry(
+                            title,
+                            BottomNavigationBarItem(
+                              icon: Icon(icon, size: 30.0),
+                              label: title,
+                            )))
+                        .values
+                        .toList(),
+                    currentIndex: _currentIndex,
+                    selectedItemColor: ColorManager.green,
+                    selectedFontSize: FontSize.fs12,
+                    unselectedFontSize: FontSize.fs12,
+                    unselectedItemColor: ColorManager.black,
+                    onTap: (index) => setState(() => _currentIndex = index)),
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }

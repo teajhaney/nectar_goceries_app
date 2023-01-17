@@ -1,4 +1,4 @@
-import '../model/models.dart' as model;
+import '/all_path.dart' as model;
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';

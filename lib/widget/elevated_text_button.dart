@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../presentation/constants/constants.dart';
+import '/all_path.dart';
 
 class ElevatedTextButton extends StatelessWidget {
   final String buttonText;

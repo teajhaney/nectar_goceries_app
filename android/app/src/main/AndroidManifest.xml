@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nectar_groceries_app">
+<uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="nectar_groceries_app"
         android:name="${applicationName}"

@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import '../presentation/constants/constants.dart';
-import '../presentation/screens/screens.dart';
+import '/all_path.dart';
 
 class AppRouter {
   GoRouter router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        name: RouteConstants.splashScreen,
+        name: RouteConstants.navScreen,
         path: '/',
         builder: (BuildContext context, GoRouterState state) =>
-            const SplashScreen(),
+            const NavScreen(),
       ),
       GoRoute(
         name: RouteConstants.welcomeScreen,
@@ -39,12 +38,12 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) =>
             const SignupScreen(),
       ),
-      GoRoute(
-        name: RouteConstants.navScreen,
-        path: '/navScreen',
-        builder: (BuildContext context, GoRouterState state) =>
-            const NavScreen(),
-      ),
+      // GoRoute(
+      //   name: RouteConstants.navScreen,
+      //   path: '/navScreen',
+      //   builder: (BuildContext context, GoRouterState state) =>
+      //       const NavScreen(),
+      // ),
     ],
   );
 }

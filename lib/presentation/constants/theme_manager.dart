@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants.dart';
+import '/all_path.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
@@ -13,7 +13,7 @@ ThemeData getApplicationTheme() {
     ),
 
     // icon theme
-    iconTheme: IconThemeData(color: ColorManager.black),
+    iconTheme: IconThemeData(color: ColorManager.white),
 
     // Text theme
     textTheme: TextTheme(
