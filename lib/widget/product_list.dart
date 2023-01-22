@@ -4,20 +4,9 @@ import 'package:gap/gap.dart';
 import '../all_path.dart';
 
 class ProductList extends StatelessWidget {
-  ProductList({
-    super.key,
-    required this.productImage,
-    required this.productName,
-    required this.productQuantity,
-    required this.productPrice,
-    required this.productLength,
-  });
+  final List<ProductsApiModel> products;
 
-  final String productImage;
-  final String productName;
-  final String productQuantity;
-  final double productPrice;
-  final int productLength;
+  ProductList({super.key, required this.products});
 
   final _controller = ScrollController();
 
@@ -29,10 +18,12 @@ class ProductList extends StatelessWidget {
       child: ListView.builder(
           controller: _controller,
           shrinkWrap: true,
-          itemCount: productLength,
+          itemCount: products.length,
           scrollDirection: Axis.horizontal,
           physics: const ScrollPhysics(),
           itemBuilder: (BuildContext context, index) {
+            var product = products[index];
+
             return Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Container(
@@ -47,21 +38,27 @@ class ProductList extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // height: 80
                       Center(
-                        child: Image(
-                          image: AssetImage(productImage),
-                          height: 80,
-                        ),
+                        child: product.image.isNotEmpty
+                            ? Image.network(
+                                product.image,
+                                height: 80,
+                              )
+                            : Image.asset(
+                                ImageAssetManager.carrotColored,
+                                height: 80,
+                              ),
                       ),
                       const Gap(20),
                       Text(
-                        productName,
+                        product.title.substring(0, 8),
                         style: getSemiBoldStyle(
                             color: ColorManager.black, fontSize: FontSize.fs20),
                       ),
                       const Gap(10),
                       Text(
-                        productQuantity,
+                        '03',
                         style: getLightStyle(
                             color: ColorManager.grey, fontSize: FontSize.fs16),
                       ),
@@ -70,7 +67,7 @@ class ProductList extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '$productPrice',
+                            '${product.price}',
                             style: getSemiBoldStyle(
                                 color: ColorManager.black,
                                 fontSize: FontSize.fs20),

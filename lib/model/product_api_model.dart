@@ -19,7 +19,7 @@ class ProductsApiModel {
     return ProductsApiModel(
       id: json['id'],
       title: json['title'],
-      price: json['price'],
+      price: json['price'].toDouble() ?? 0,
       description: json['description'],
       image: json['image'],
       likes: json['likes'],

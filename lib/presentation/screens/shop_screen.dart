@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gap/gap.dart';
@@ -16,12 +15,10 @@ class _ShopScreenState extends State<ShopScreen>
     with AutomaticKeepAliveClientMixin {
   final _searchController = TextEditingController();
 
-  late Future<List<ProductsApiModel>> _futureProductApi;
   late ApiRespository respository;
 
   callApi() {
     respository = ApiRespository();
-    _futureProductApi = respository.productApi();
   }
 
   @override
@@ -91,25 +88,21 @@ class _ShopScreenState extends State<ShopScreen>
               ),
               const Gap(20),
               FutureBuilder<List<ProductsApiModel>>(
-                  future: _futureProductApi,
+                  future: respository.productApi(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<ProductsApiModel>> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      List<ProductsApiModel>? productData = snapshot.data;
-                      print(productData);
-
-                      return ProductList(
-                        productImage: ImageAssetManager.carrotColored,
-                        productName: 'Product name',
-                        productPrice: 4.55,
-                        productQuantity: 'Product quantity',
-                        productLength: 5,
-                      );
-                    } else if (snapshot.hasError) {
+                    if (snapshot.hasError) {
                       return Center(
                         child: Text('${snapshot.hasError}'),
                       );
+                    } else if (snapshot.data != null) {
+                      if (snapshot.data!.isEmpty) {
+                        return const Center(
+                            child: Text("No Product to display"));
+                      }
+                      return ProductList(products: snapshot.data!);
                     }
+
                     return const Center(
                         child: CircularProgressIndicator(
                       color: Color(0xff18B762),

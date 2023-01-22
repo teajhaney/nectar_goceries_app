@@ -15,20 +15,30 @@ class ApiRespository {
       "Accept": "application/json",
     };
 
-    var url = Uri.parse(baseUrl + params);
-    var response = await http.get(url, headers: headers);
-    if (response.statusCode == 200) {
-      var responseData = jsonDecode(response.body);
-      print(responseData);
+    try {
+      var url = Uri.parse(baseUrl + params);
+      var response = await http.get(url, headers: headers);
 
-      return List<ProductsApiModel>.from(
-          responseData((data) => ProductsApiModel.fromJson(data))).toList();
-    } else {
-      if (response.statusCode == 402) {
-        print(response.statusCode);
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body) as Map<String, dynamic>;
+        var result = responseData["products"]
+            .map<ProductsApiModel>(
+                (product) => ProductsApiModel.fromJson(product))
+            .toList();
+
+        return result;
+      } else {
+        if (response.statusCode == 402) {
+          print(response.statusCode);
+        }
       }
+    } catch (e) {
+      print(e);
+      throw ('Not working');
     }
-    throw ('Not working');
+    return [];
   }
 }
 
