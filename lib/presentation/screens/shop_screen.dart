@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gap/gap.dart';
@@ -12,16 +12,12 @@ class ShopScreen extends StatefulWidget {
   State<ShopScreen> createState() => _ShopScreenState();
 }
 
-class _ShopScreenState extends State<ShopScreen> {
+class _ShopScreenState extends State<ShopScreen>
+    with AutomaticKeepAliveClientMixin {
   final _searchController = TextEditingController();
-  final _controller = ScrollController();
-  late Future _futureProductApi;
+
+  late Future<List<ProductsApiModel>> _futureProductApi;
   late ApiRespository respository;
-  @override
-  void initState() {
-    callApi();
-    super.initState();
-  }
 
   callApi() {
     respository = ApiRespository();
@@ -29,7 +25,14 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   @override
+  void initState() {
+    callApi();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -87,96 +90,20 @@ class _ShopScreenState extends State<ShopScreen> {
                 ),
               ),
               const Gap(20),
-              FutureBuilder(
+              FutureBuilder<List<ProductsApiModel>>(
                   future: _futureProductApi,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<ProductsApiModel>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      var productsData = snapshot.data;
-                      print(snapshot.data);
-                      return SizedBox(
-                        height: 250,
-                        width: double.infinity,
-                        child: ListView.builder(
-                            controller: _controller,
-                            shrinkWrap: true,
-                            itemCount: 20,
-                            scrollDirection: Axis.horizontal,
-                            physics: const ScrollPhysics(),
-                            itemBuilder: (BuildContext context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Container(
-                                  width: 170,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        width: 0.2, color: ColorManager.grey),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10,
-                                        right: 10,
-                                        bottom: 10,
-                                        top: 20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Center(
-                                          child: Image(
-                                            image: AssetImage(ImageAssetManager
-                                                .carrotColored),
-                                            height: 80,
-                                          ),
-                                        ),
-                                        const Gap(20),
-                                        Text(
-                                          'Produc name',
-                                          style: getSemiBoldStyle(
-                                              color: ColorManager.black,
-                                              fontSize: FontSize.fs20),
-                                        ),
-                                        const Gap(10),
-                                        Text(
-                                          'Product quantity',
-                                          style: getLightStyle(
-                                              color: ColorManager.grey,
-                                              fontSize: FontSize.fs16),
-                                        ),
-                                        const Gap(20),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              '\$4.99',
-                                              style: getSemiBoldStyle(
-                                                  color: ColorManager.black,
-                                                  fontSize: FontSize.fs20),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  color: ColorManager.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                child: const Center(
-                                                  child: Icon(Icons.add),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
+                      List<ProductsApiModel>? productData = snapshot.data;
+                      print(productData);
+
+                      return ProductList(
+                        productImage: ImageAssetManager.carrotColored,
+                        productName: 'Product name',
+                        productPrice: 4.55,
+                        productQuantity: 'Product quantity',
+                        productLength: 5,
                       );
                     } else if (snapshot.hasError) {
                       return Center(
@@ -194,4 +121,7 @@ class _ShopScreenState extends State<ShopScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

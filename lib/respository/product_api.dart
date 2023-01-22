@@ -4,10 +4,10 @@ import '/all_path.dart';
 
 class ApiRespository {
   Future<List<ProductsApiModel>> productApi() async {
-    String apiKey = '0b22242828094a0baeb4de2ef010330a';
+    String apiKey = '9ded5051b75845cdbd3017ace3a1bd91';
     String query = 'beverages';
-    int number = 100;
-    String baseUrl = '';
+    int number = 2;
+    String baseUrl = 'https://api.spoonacular.com';
     String params =
         '/food/products/search?apiKey=$apiKey&query=$query&number=$number&addProductInformation=true';
 
@@ -18,12 +18,11 @@ class ApiRespository {
     var url = Uri.parse(baseUrl + params);
     var response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
-      print(response.statusCode);
       var responseData = jsonDecode(response.body);
       print(responseData);
 
       return List<ProductsApiModel>.from(
-          responseData.map((data) => ProductsApiModel.fromJson(data)));
+          responseData((data) => ProductsApiModel.fromJson(data))).toList();
     } else {
       if (response.statusCode == 402) {
         print(response.statusCode);

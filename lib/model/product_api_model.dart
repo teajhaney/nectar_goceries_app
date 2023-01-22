@@ -4,6 +4,7 @@ class ProductsApiModel {
   double price;
   String description;
   String image;
+  int likes;
 
   ProductsApiModel({
     required this.id,
@@ -11,6 +12,7 @@ class ProductsApiModel {
     required this.price,
     required this.description,
     required this.image,
+    required this.likes,
   });
 
   factory ProductsApiModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class ProductsApiModel {
       price: json['price'],
       description: json['description'],
       image: json['image'],
+      likes: json['likes'],
     );
   }
 
@@ -30,6 +33,7 @@ class ProductsApiModel {
     data['price'] = price;
     data['description'] = description;
     data['image'] = image;
+    data['likes'] = likes;
     return data;
   }
 }
