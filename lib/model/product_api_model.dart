@@ -18,10 +18,10 @@ class ProductsApiModel {
   factory ProductsApiModel.fromJson(Map<String, dynamic> json) {
     return ProductsApiModel(
       id: json['id'],
-      title: json['title'],
-      price: json['price'],
-      description: json['description'],
-      image: json['image'],
+      title: json['title'] ?? '',
+      price: json['price'].toDouble() ?? 0,
+      description: json['description'] ?? '',
+      image: json['image'] ?? '',
       likes: json['likes'],
     );
   }
