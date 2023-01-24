@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import '/all_path.dart';
 
 class NavScreen extends StatefulWidget {
@@ -8,7 +9,8 @@ class NavScreen extends StatefulWidget {
   State<NavScreen> createState() => _NavScreenState();
 }
 
-class _NavScreenState extends State<NavScreen> {
+class _NavScreenState extends State<NavScreen>
+    with AutomaticKeepAliveClientMixin {
   final List<Widget> _screens = const [
     ShopScreen(key: PageStorageKey('ShopScreen')),
     ExploreScreen(key: PageStorageKey('ExploreScreen')),
@@ -26,13 +28,25 @@ class _NavScreenState extends State<NavScreen> {
   var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: Scaffold(
           body: _screens[_currentIndex],
-          bottomNavigationBar: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: ColorManager.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: -10,
+                  blurRadius: 30,
+                  color: ColorManager.black.withOpacity(.4),
+                  offset: const Offset(0, 25),
+                )
+              ],
             ),
             child: Theme(
               data: ThemeData(
@@ -41,28 +55,33 @@ class _NavScreenState extends State<NavScreen> {
               ),
               child: SizedBox(
                 height: AppSize.s70,
-                child: BottomNavigationBar(
-                    type: BottomNavigationBarType.fixed,
-                    backgroundColor: ColorManager.white,
-                    elevation: 3,
-                    items: _icons
+                child: GNav(
+                    tabs: _icons
                         .map((title, icon) => MapEntry(
                             title,
-                            BottomNavigationBarItem(
-                              icon: Icon(icon, size: 30.0),
-                              label: title,
+                            GButton(
+                              icon: icon,
+                              text: title,
                             )))
                         .values
                         .toList(),
-                    currentIndex: _currentIndex,
-                    selectedItemColor: ColorManager.green,
-                    selectedFontSize: FontSize.fs12,
-                    unselectedFontSize: FontSize.fs12,
-                    unselectedItemColor: ColorManager.black,
-                    onTap: (index) => setState(() => _currentIndex = index)),
+                    curve: Curves.easeInOut,
+                    iconSize: 24,
+                    gap: 8,
+                    tabBackgroundColor: ColorManager.green,
+                    selectedIndex: _currentIndex,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    duration: const Duration(milliseconds: 400),
+                    activeColor: ColorManager.white,
+                    color: ColorManager.black,
+                    onTabChange: (index) =>
+                        setState(() => _currentIndex = index)),
               ),
             ),
           )),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
