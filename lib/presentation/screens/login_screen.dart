@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:nectar_groceries_app/resources/auth_methods.dart';
-import 'package:nectar_groceries_app/widget/widgets.dart';
-import '/presentation/constants/constants.dart';
+import '/all_path.dart';
 
 import 'package:go_router/go_router.dart';
 

@@ -12,6 +12,7 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) =>
             const NavScreen(),
       ),
+
       GoRoute(
         name: RouteConstants.welcomeScreen,
         path: '/welcomeScreen',
@@ -23,14 +24,6 @@ class AppRouter {
         path: '/loginScreen',
         builder: (BuildContext context, GoRouterState state) =>
             const LoginScreen(),
-        // routes: [
-        //   GoRoute(
-        //     name: RouteConstants.signupScreen,
-        //     path: 'signupScreen',
-        //     builder: (BuildContext context, GoRouterState state) =>
-        //         const SignupScreen(),
-        //   ),
-        // ]),
       ),
       GoRoute(
         name: RouteConstants.signupScreen,
@@ -43,6 +36,14 @@ class AppRouter {
       //   path: '/navScreen',
       //   builder: (BuildContext context, GoRouterState state) =>
       //       const NavScreen(),
+      //  routes: [
+      //       GoRoute(
+      //         name: RouteConstants.productDetailsScreen,
+      //         path: '/productDetailsScreen',
+      //         builder: (BuildContext context, GoRouterState state) =>
+      //             const ProductDetailsScreen(),
+      //       ),
+      //     ]
       // ),
     ],
   );
