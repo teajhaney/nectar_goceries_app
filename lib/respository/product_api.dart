@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '/all_path.dart';
 
 class ApiRespository {
-  String apiKey = ' 9f4cfd2f8dc947a188a68fb93b60d2cd';
+  String apiKey = '2272b6d139464f0ca2edf89d9f208d32';
   String baseUrl = 'https://api.spoonacular.com';
   int number = 10;
   Future<List<ProductsApiModel>> exclusiveProductApi() async {
@@ -50,7 +50,7 @@ class ApiRespository {
   //
   //
 
-  Future<List<ProductsApiModel>> bestSellingProductApi2() async {
+  Future<List<ProductsApiModel>> bestSellingProductApi() async {
     String query = 'best selling';
 
     String params =
@@ -94,7 +94,7 @@ class ApiRespository {
   //
   //
 
-  Future<List<ProductsApiModel>> groceriesProductApi2() async {
+  Future<List<ProductsApiModel>> groceriesProductApi() async {
     String query = 'groceries';
 
     String params =

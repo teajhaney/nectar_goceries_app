@@ -1,5 +1,5 @@
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-
 import 'package:gap/gap.dart';
 
 import '/all_path.dart';
@@ -13,6 +13,7 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen>
     with AutomaticKeepAliveClientMixin {
+  final AsyncMemoizer _memoizer = AsyncMemoizer();
   final _searchController = TextEditingController();
 
   // late Future<List<ProductsApiModel>> _futureProductApi;
@@ -135,7 +136,7 @@ class _ShopScreenState extends State<ShopScreen>
               ),
               const Gap(20),
               FutureBuilder<List<ProductsApiModel>>(
-                  future: respository.bestSellingProductApi2(),
+                  future: respository.bestSellingProductApi(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<ProductsApiModel>> snapshot) {
                     if (snapshot.hasError) {
@@ -179,7 +180,7 @@ class _ShopScreenState extends State<ShopScreen>
               ),
               const Gap(20),
               FutureBuilder<List<ProductsApiModel>>(
-                  future: respository.groceriesProductApi2(),
+                  future: respository.groceriesProductApi(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<ProductsApiModel>> snapshot) {
                     if (snapshot.hasError) {
@@ -204,5 +205,23 @@ class _ShopScreenState extends State<ShopScreen>
         ),
       ),
     );
+  }
+
+  Future<List<ProductsApiModel>>? fetchExclisiveProductApiOnce() {
+    _memoizer.runOnce(() async {
+      return respository.exclusiveProductApi();
+    });
+  }
+
+  Future<List<ProductsApiModel>>? fetchBestSellingProductApiOnce() {
+    _memoizer.runOnce(() async {
+      return respository.bestSellingProductApi();
+    });
+  }
+
+  Future<List<ProductsApiModel>>? fetchGroceriesProductApiOnce() {
+    _memoizer.runOnce(() async {
+      return respository.groceriesProductApi();
+    });
   }
 }
