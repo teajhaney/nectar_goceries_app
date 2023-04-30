@@ -66,12 +66,7 @@ class ProductList extends StatelessWidget {
                               fontSize: FontSize.fs20),
                         ),
                         const Gap(10),
-                        Text(
-                          '03',
-                          style: getLightStyle(
-                              color: ColorManager.grey,
-                              fontSize: FontSize.fs16),
-                        ),
+
                         const Gap(20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

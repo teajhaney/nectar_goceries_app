@@ -12,4 +12,6 @@ class StringManager {
   static String signup = 'Sign up';
   static String alreadyhaveAnAccount = 'Already have an account?';
   static String enterCredentials = 'Enter your credientials to continue';
+  static String productsDetails = 'Product Details';
+  static String addToBasket = 'Add To Basket';
 }

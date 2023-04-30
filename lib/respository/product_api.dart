@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '/all_path.dart';
 
 class ApiRespository {
-  String apiKey = '2272b6d139464f0ca2edf89d9f208d32';
+  String apiKey = 'fbfa23bc2a834ff193f96d4897263916';
   String baseUrl = 'https://api.spoonacular.com';
   int number = 10;
   Future<List<ProductsApiModel>> exclusiveProductApi() async {
