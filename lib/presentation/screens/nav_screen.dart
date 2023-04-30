@@ -70,7 +70,8 @@ class _NavScreenState extends State<NavScreen>
                     gap: 8,
                     tabBackgroundColor: ColorManager.green,
                     selectedIndex: _currentIndex,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
                     duration: const Duration(milliseconds: 400),
                     activeColor: ColorManager.white,
                     color: ColorManager.black,

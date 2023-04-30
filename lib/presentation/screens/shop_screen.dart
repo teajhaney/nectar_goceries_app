@@ -211,17 +211,20 @@ class _ShopScreenState extends State<ShopScreen>
     _memoizer.runOnce(() async {
       return respository.exclusiveProductApi();
     });
+    return null;
   }
 
   Future<List<ProductsApiModel>>? fetchBestSellingProductApiOnce() {
     _memoizer.runOnce(() async {
       return respository.bestSellingProductApi();
     });
+    return null;
   }
 
   Future<List<ProductsApiModel>>? fetchGroceriesProductApiOnce() {
     _memoizer.runOnce(() async {
       return respository.groceriesProductApi();
     });
+    return null;
   }
 }

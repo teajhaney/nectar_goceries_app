@@ -40,7 +40,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             size: 30,
                           )),
                       IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () {},
                           icon: Icon(
                             Icons.share,
                             color: ColorManager.black,
@@ -53,6 +53,26 @@ class ProductDetailsScreen extends StatelessWidget {
                     height: 200,
                     width: 200,
                   ),
+                ],
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: AppSize.s20, right: AppSize.s20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${products.title.substring(0, 15)}...',
+                    style: getBoldStyle(color: ColorManager.black),
+                  ),
+                  IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: ColorManager.grey,
+                        size: 25,
+                      )),
                 ],
               ),
             )
