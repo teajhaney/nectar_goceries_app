@@ -14,4 +14,5 @@ class StringManager {
   static String enterCredentials = 'Enter your credientials to continue';
   static String productsDetails = 'Product Details';
   static String addToBasket = 'Add To Basket';
+  static String likes = 'Like(s)';
 }

@@ -38,7 +38,8 @@ class _ShopScreenState extends State<ShopScreen>
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.only(left: AppSize.s20, top: AppSize.s20),
+          padding: const EdgeInsets.only(
+              left: AppSize.s20, top: AppSize.s20, right: AppSize.s20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,7 +52,10 @@ class _ShopScreenState extends State<ShopScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.location_pin),
+                  Icon(
+                    Icons.location_pin,
+                    color: ColorManager.black,
+                  ),
                   Text(
                     'Lagos, Nigeria',
                     style: getMediumStyle(
@@ -61,7 +65,7 @@ class _ShopScreenState extends State<ShopScreen>
               ),
               const Gap(20),
               Padding(
-                padding: const EdgeInsets.only(right: AppSize.s20),
+                padding: const EdgeInsets.only(),
                 child: TextFieldInput(
                   textEditingController: _searchController,
                   hintText: 'Search Store',
@@ -69,26 +73,23 @@ class _ShopScreenState extends State<ShopScreen>
                 ),
               ),
               const Gap(20),
-              Padding(
-                padding: const EdgeInsets.only(right: AppSize.s20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Exclusive Offer',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.black, fontSize: FontSize.fs20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Exclusive Offer',
+                    style: getSemiBoldStyle(
+                        color: ColorManager.black, fontSize: FontSize.fs20),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      'See all',
+                      style: getMediumStyle(
+                          color: ColorManager.green, fontSize: FontSize.fs16),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'See all',
-                        style: getMediumStyle(
-                            color: ColorManager.green, fontSize: FontSize.fs16),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const Gap(20),
               FutureBuilder<List<ProductsApiModel>>(
@@ -113,26 +114,23 @@ class _ShopScreenState extends State<ShopScreen>
                     ));
                   }),
               const Gap(20),
-              Padding(
-                padding: const EdgeInsets.only(right: AppSize.s20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Best Selling',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.black, fontSize: FontSize.fs20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Best Selling',
+                    style: getSemiBoldStyle(
+                        color: ColorManager.black, fontSize: FontSize.fs20),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      'See all',
+                      style: getMediumStyle(
+                          color: ColorManager.green, fontSize: FontSize.fs16),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'See all',
-                        style: getMediumStyle(
-                            color: ColorManager.green, fontSize: FontSize.fs16),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const Gap(20),
               FutureBuilder<List<ProductsApiModel>>(
@@ -157,26 +155,23 @@ class _ShopScreenState extends State<ShopScreen>
                     ));
                   }),
               const Gap(20),
-              Padding(
-                padding: const EdgeInsets.only(right: AppSize.s20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Groceries',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.black, fontSize: FontSize.fs20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Groceries',
+                    style: getSemiBoldStyle(
+                        color: ColorManager.black, fontSize: FontSize.fs20),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      'See all',
+                      style: getMediumStyle(
+                          color: ColorManager.green, fontSize: FontSize.fs16),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'See all',
-                        style: getMediumStyle(
-                            color: ColorManager.green, fontSize: FontSize.fs16),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const Gap(20),
               FutureBuilder<List<ProductsApiModel>>(

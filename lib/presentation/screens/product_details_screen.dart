@@ -115,20 +115,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             color: ColorManager.grey,
                             size: 30,
                           )),
+                      const Gap(5),
                       Container(
                         height: 35,
                         width: 35,
                         decoration: BoxDecoration(
-                          color: ColorManager.green,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                            borderRadius: BorderRadius.circular(10),
+                            border:
+                                Border.all(width: 1, color: ColorManager.grey)),
                         child: Center(
                           child: Text(
                             _counter.toString(),
-                            style: getBoldStyle(color: ColorManager.black),
+                            style: getSemiBoldStyle(color: ColorManager.black),
                           ),
                         ),
                       ),
+                      const Gap(5),
                       IconButton(
                           onPressed: _incremmentCounter,
                           icon: Icon(
@@ -170,13 +172,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             Padding(
               padding:
                   const EdgeInsets.only(left: AppSize.s20, right: AppSize.s20),
-              child: SizedBox(
-                height: 200,
-                child: Text(
-                  widget.products.description,
-                  style: getRegularStyle(
-                      color: ColorManager.grey, fontSize: FontSize.fs16),
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: 200,
+                  child: Text(
+                    widget.products.description,
+                    style: getRegularStyle(
+                        color: ColorManager.grey, fontSize: FontSize.fs16),
+                  ),
                 ),
+              ),
+            ),
+            const Gap(20),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: AppSize.s20, right: AppSize.s20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    StringManager.likes,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.black, fontSize: FontSize.fs20),
+                  ),
+                  Text(
+                    widget.products.likes.toString(),
+                    style: getBoldStyle(
+                        color: ColorManager.grey, fontSize: FontSize.fs20),
+                  ),
+                ],
               ),
             ),
             const Gap(30),
