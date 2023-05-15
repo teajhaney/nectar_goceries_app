@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nectar_groceries_app/presentation/screens/screens.dart';
 import '../constants/constants.dart';
 
 import 'package:go_router/go_router.dart';

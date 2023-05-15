@@ -17,9 +17,9 @@ ThemeData getApplicationTheme() {
 
     // Text theme
     textTheme: TextTheme(
-        headline1: getSemiBoldStyle(
+        displayLarge: getSemiBoldStyle(
             color: ColorManager.black, fontSize: FontSize.fs20),
-        headline2:
+        displayMedium:
             getLightStyle(color: ColorManager.black, fontSize: FontSize.fs12)),
 
     //AppBar Theme

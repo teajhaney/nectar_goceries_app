@@ -1,17 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:nectar_groceries_app/all_path.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
+class ProductDetailsScreen extends ConsumerStatefulWidget {
   const ProductDetailsScreen({super.key, required this.products});
   final ProductsApiModel products;
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProductDetailsScreenState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
   int _counter = 0;
 
   void _incremmentCounter() {
@@ -28,6 +29,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartItem = ref.read(cartListProvider);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -141,7 +143,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ],
                   ),
                   Text(
-                    '\$${widget.products.price.toString()}',
+                    '\$${widget.products.price.toString().substring(0, 4)}',
                     style: getBoldStyle(color: ColorManager.black),
                   ),
                 ],
@@ -208,7 +210,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               padding:
                   const EdgeInsets.only(left: AppSize.s20, right: AppSize.s20),
               child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    cartItem.addToCart(
+                      title: widget.products.title,
+                      image: widget.products.image,
+                      productId: widget.products.id,
+                      price: widget.products.price,
+                      count: _counter,
+                    );
+                  },
                   child: Container(
                       width: double.infinity,
                       alignment: Alignment.center,

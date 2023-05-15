@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../all_path.dart';
-import '../constants/constants.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});

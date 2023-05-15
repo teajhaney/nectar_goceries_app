@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 import '../all_path.dart';
 
@@ -72,7 +71,7 @@ class ProductList extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${product.price}',
+                              '\$${product.price.toString().substring(0, 4)}',
                               style: getSemiBoldStyle(
                                   color: ColorManager.black,
                                   fontSize: FontSize.fs20),
