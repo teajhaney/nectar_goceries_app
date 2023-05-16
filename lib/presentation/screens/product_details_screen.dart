@@ -13,7 +13,7 @@ class ProductDetailsScreen extends ConsumerStatefulWidget {
 }
 
 class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
-  int _counter = 0;
+  int _counter = 1;
 
   void _incremmentCounter() {
     setState(() {
@@ -218,6 +218,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                       price: widget.products.price,
                       count: _counter,
                     );
+                    showSnackBar(context, 'Added to cart');
                   },
                   child: Container(
                       width: double.infinity,

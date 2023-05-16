@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 import '../../all_path.dart';
 
@@ -14,6 +15,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = ref.watch(cartListProvider);
+    final totalPrice = ref.watch(totalAmountProvider);
     return (cart.list.isEmpty)
         ? Padding(
             padding: const EdgeInsets.only(
@@ -25,7 +27,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   width: double.infinity,
                   child: Center(
                     child: Text(
-                      'My Cart',
+                      StringManager.myCart,
                       style: getBoldStyle(color: ColorManager.black),
                     ),
                   ),
@@ -47,36 +49,67 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 )
               ],
             ))
-        : Padding(
-            padding: const EdgeInsets.only(
-                left: AppSize.s20, top: AppSize.s20, right: AppSize.s20),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 100,
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      'My Cart',
-                      style: getBoldStyle(color: ColorManager.black),
+        : Scaffold(
+            body: Padding(
+                padding: const EdgeInsets.only(
+                    left: AppSize.s20, top: AppSize.s20, right: AppSize.s20),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 100,
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          StringManager.myCart,
+                          style: getBoldStyle(color: ColorManager.black),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    itemBuilder: ((context, index) => CartTile(
-                          id: cart.list[index].id,
-                          title: cart.list[index].title,
-                          price: cart.list[index].price,
-                          count: cart.list[index].count,
-                          image: cart.list[index].image,
-                        )),
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                    itemCount: cart.list.length,
-                  ),
-                )
-              ],
-            ));
+                    Expanded(
+                      child: ListView.separated(
+                        itemBuilder: ((context, index) => CartTile(
+                              id: cart.list[index].id!,
+                              title: cart.list[index].title!,
+                              price: cart.list[index].price!,
+                              count: cart.list[index].count!,
+                              image: cart.list[index].image!,
+                            )),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(),
+                        itemCount: cart.list.length,
+                      ),
+                    ),
+                  ],
+                )),
+            floatingActionButton: Padding(
+              padding:
+                  const EdgeInsets.only(left: AppSize.s40, right: AppSize.s20),
+              child: Container(
+                  height: 70,
+                  width: double.maxFinite,
+                  alignment: Alignment.center,
+                  decoration: ShapeDecoration(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(AppSize.s20))),
+                      color: ColorManager.green),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        StringManager.goToCheckOut,
+                        style: getRegularStyle(
+                            color: ColorManager.white, fontSize: FontSize.fs20),
+                      ),
+                      const Gap(20),
+                      Text(
+                        '\$$totalPrice'.substring(0, 7),
+                        style: getRegularStyle(
+                            color: ColorManager.black, fontSize: FontSize.fs20),
+                      ),
+                    ],
+                  )),
+            ),
+          );
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../all_path.dart';
 
-class ProductList extends StatelessWidget {
+class ProductList extends ConsumerWidget {
   final List<ProductsApiModel> products;
 
   ProductList({super.key, required this.products});
@@ -11,7 +12,8 @@ class ProductList extends StatelessWidget {
   final _controller = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteItem = ref.read(favoriteListProvider);
     return SizedBox(
       height: 250,
       width: double.infinity,
@@ -77,7 +79,16 @@ class ProductList extends StatelessWidget {
                                   fontSize: FontSize.fs20),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                favoriteItem.addToFavoriteProduct(
+                                  title: product.title,
+                                  image: product.image,
+                                  productId: product.id,
+                                  price: product.price,
+                                  count: 1,
+                                );
+                                showSnackBar(context, 'Added to favorite');
+                              },
                               child: Container(
                                 height: 50,
                                 width: 50,

@@ -15,4 +15,7 @@ class StringManager {
   static String productsDetails = 'Product Details';
   static String addToBasket = 'Add To Basket';
   static String likes = 'Like(s)';
+  static String goToCheckOut = 'Go to Check out';
+  static String myCart = 'My Cart';
+  static String favorite = 'Favorite';
 }

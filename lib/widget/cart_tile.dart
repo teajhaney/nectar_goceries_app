@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -14,33 +16,32 @@ class CartTile extends ConsumerStatefulWidget {
     required this.count,
   });
   int? id;
-  String? title;
-  double? price;
-  String? image;
-  int? count;
+  String title;
+  double price;
+  String image;
+  late int count;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CartTileState();
 }
 
 class _CartTileState extends ConsumerState<CartTile> {
-  int _counter = 0;
-
-  _incremmentCounter(int counter) {
+  _incremmentCounter() {
     setState(() {
-      counter++;
+      widget.count++;
     });
   }
 
-  _decremmentCounter(int counter) {
+  _decremmentCounter() {
     setState(() {
-      counter--;
+      widget.count--;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final counter = widget.count;
+    int counter = widget.count;
+    final cart = ref.watch(cartListProvider);
     return SizedBox(
       height: 100,
       width: double.infinity,
@@ -51,7 +52,7 @@ class _CartTileState extends ConsumerState<CartTile> {
           Row(
             children: [
               Image.network(
-                '${widget.image}',
+                widget.image,
                 width: 50,
               ),
               const Gap(10),
@@ -65,7 +66,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                   Row(
                     children: [
                       IconButton(
-                          onPressed: _decremmentCounter(counter!),
+                          onPressed: _decremmentCounter,
                           icon: Icon(
                             Icons.remove,
                             color: ColorManager.grey,
@@ -88,7 +89,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                       ),
                       const Gap(5),
                       IconButton(
-                          onPressed: _incremmentCounter(counter),
+                          onPressed: _incremmentCounter,
                           icon: Icon(
                             Icons.add,
                             color: ColorManager.green,
@@ -104,7 +105,9 @@ class _CartTileState extends ConsumerState<CartTile> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  cart.removeFromCart(widget.id!);
+                },
                 child: Text(
                   'X',
                   style: getSemiBoldStyle(
@@ -115,7 +118,7 @@ class _CartTileState extends ConsumerState<CartTile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, AppMargin.m10),
                 child: Text(
-                  '${widget.price}',
+                  '\$${widget.price}'.substring(0, 5).toString(),
                   style: getBoldStyle(color: ColorManager.black),
                 ),
               ),
