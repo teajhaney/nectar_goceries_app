@@ -143,7 +143,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     ],
                   ),
                   Text(
-                    '\$${widget.products.price.toString().substring(0, 4)}',
+                    '\$${(_counter * widget.products.price).toString().substring(0, 5)}',
                     style: getBoldStyle(color: ColorManager.black),
                   ),
                 ],

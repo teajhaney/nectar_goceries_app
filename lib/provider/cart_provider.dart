@@ -3,15 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/all_path.dart';
 import 'package:tuple/tuple.dart';
 
-final totalAmountProvider = StateProvider((ref) {
-  return ref
-      .watch(cartListProvider)
-      .list
-      .map((e) => Tuple2(e.price!, e.count!))
-      .fold<double>(
-          0.0,
-          (previousValue, element) =>
-              previousValue + element.item1 * element.item2);
+// final totalAmountProvider = StateProvider((ref) {
+//   return ref
+//       .watch(cartListProvider)
+//       .list
+//       .map((e) => Tuple2(e.price!, e.count!))
+//       .fold<double>(
+//           0.0,
+//           (previousValue, element) =>
+//               previousValue + element.item1 + element.item2);
+// });
+final totalAmountProvider = StateProvider<double>((ref) {
+  final cartList = ref.watch(cartListProvider).list;
+  double totalAmount = 0.0;
+  for (var item in cartList) {
+    totalAmount += (item.price ?? 0.0) * (item.count ?? 0);
+  }
+  return totalAmount;
 });
 
 final cartListProvider = ChangeNotifierProvider((ref) {
@@ -50,8 +58,9 @@ class CartList extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFromCart(int productId) {
-    list.remove(productId);
+  void removeFromCart(int index) {
+    // ignore: list_remove_unrelated_type
+    list.remove(index);
     notifyListeners();
   }
 }

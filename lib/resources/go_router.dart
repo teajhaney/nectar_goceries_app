@@ -7,12 +7,11 @@ class AppRouter {
   GoRouter router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        name: RouteConstants.navScreen,
-        path: '/',
+        name: RouteConstants.splashScreen,
+        path: '/splashScreen',
         builder: (BuildContext context, GoRouterState state) =>
-            const NavScreen(),
+            const SplashScreen(),
       ),
-
       GoRoute(
         name: RouteConstants.welcomeScreen,
         path: '/welcomeScreen',
@@ -31,20 +30,18 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) =>
             const SignupScreen(),
       ),
-      // GoRoute(
-      //   name: RouteConstants.navScreen,
-      //   path: '/navScreen',
-      //   builder: (BuildContext context, GoRouterState state) =>
-      //       const NavScreen(),
-      //  routes: [
-      //       GoRoute(
-      //         name: RouteConstants.productDetailsScreen,
-      //         path: '/productDetailsScreen',
-      //         builder: (BuildContext context, GoRouterState state) =>
-      //             const ProductDetailsScreen(),
-      //       ),
-      //     ]
-      // ),
+      GoRoute(
+        name: RouteConstants.orderCompletedScreen,
+        path: '/orderCompledScreen',
+        builder: (BuildContext context, GoRouterState state) =>
+            const OrderCompltedScreen(),
+      ),
+      GoRoute(
+        name: RouteConstants.navScreen,
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) =>
+            const NavScreen(),
+      ),
     ],
   );
 }

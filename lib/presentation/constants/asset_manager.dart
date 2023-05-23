@@ -5,5 +5,7 @@ class ImageAssetManager {
   static String carrotColored = "asset/images/carrot-colored.png";
   static String locationLogo = "asset/images/Location_logo.png";
   static String logo1 = "asset/images/Logo_1.png";
-  static String orderComplete = "asset/images/bage_image.png";
+  static String orderComplete = "asset/images/order_complete.png";
+  static String mastercard = "asset/images/mastercard.png";
+  static String card = "asset/images/card.png";
 }

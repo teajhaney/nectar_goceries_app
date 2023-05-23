@@ -25,7 +25,7 @@ class _NavScreenState extends State<NavScreen>
     'Favorite': Icons.favorite_outline,
     'Account': Icons.person_outline_outlined,
   };
-  var _currentIndex = 2;
+  var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     super.build(context);

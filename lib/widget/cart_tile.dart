@@ -14,12 +14,14 @@ class CartTile extends ConsumerStatefulWidget {
     required this.price,
     required this.image,
     required this.count,
+    required this.index,
   });
   int? id;
   String title;
   double price;
   String image;
   late int count;
+  int index;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CartTileState();
@@ -40,8 +42,7 @@ class _CartTileState extends ConsumerState<CartTile> {
 
   @override
   Widget build(BuildContext context) {
-    int counter = widget.count;
-    final cart = ref.watch(cartListProvider);
+    final cart = ref.read(cartListProvider);
     return SizedBox(
       height: 100,
       width: double.infinity,
@@ -82,7 +83,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                                 Border.all(width: 1, color: ColorManager.grey)),
                         child: Center(
                           child: Text(
-                            '$counter',
+                            widget.count.toString(),
                             style: getSemiBoldStyle(color: ColorManager.black),
                           ),
                         ),
@@ -106,7 +107,7 @@ class _CartTileState extends ConsumerState<CartTile> {
             children: [
               GestureDetector(
                 onTap: () {
-                  cart.removeFromCart(widget.id!);
+                  cart.removeFromCart(widget.index);
                 },
                 child: Text(
                   'X',
@@ -118,7 +119,7 @@ class _CartTileState extends ConsumerState<CartTile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, AppMargin.m10),
                 child: Text(
-                  '\$${widget.price}'.substring(0, 5).toString(),
+                  '\$${widget.count * widget.price}'.substring(0, 5).toString(),
                   style: getBoldStyle(color: ColorManager.black),
                 ),
               ),

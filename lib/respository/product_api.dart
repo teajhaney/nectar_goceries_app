@@ -1,10 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '/all_path.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final apiProvider = Provider<ApiRespository>(
+  (ref) => ApiRespository(),
+);
 
 class ApiRespository {
-  String apiKey = '';
-  //d4151197405d46f187c72e7ceb172d92
+  String apiKey = 'c69d1e5487374899be9d082adfc25d44';
+  //c69d1e5487374899be9d082adfc25d44
   String baseUrl = 'https://api.spoonacular.com';
   int number = 10;
   Future<List<ProductsApiModel>> exclusiveProductApi() async {
@@ -21,8 +26,6 @@ class ApiRespository {
       var url = Uri.parse(baseUrl + params);
       var response = await http.get(url, headers: headers);
 
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body) as Map<String, dynamic>;
         var result = responseData["products"]
@@ -32,12 +35,9 @@ class ApiRespository {
 
         return result;
       } else {
-        if (response.statusCode == 402) {
-          print(response.statusCode);
-        }
+        if (response.statusCode == 402) {}
       }
     } catch (e) {
-      print(e);
       throw ('Not working');
     }
     return [];
@@ -65,8 +65,6 @@ class ApiRespository {
       var url = Uri.parse(baseUrl + params);
       var response = await http.get(url, headers: headers);
 
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body) as Map<String, dynamic>;
         var result = responseData["products"]
@@ -76,12 +74,9 @@ class ApiRespository {
 
         return result;
       } else {
-        if (response.statusCode == 402) {
-          print(response.statusCode);
-        }
+        if (response.statusCode == 402) {}
       }
     } catch (e) {
-      print(e);
       throw ('Not working');
     }
     return [];
@@ -109,8 +104,6 @@ class ApiRespository {
       var url = Uri.parse(baseUrl + params);
       var response = await http.get(url, headers: headers);
 
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body) as Map<String, dynamic>;
         var result = responseData["products"]
@@ -120,12 +113,9 @@ class ApiRespository {
 
         return result;
       } else {
-        if (response.statusCode == 402) {
-          print(response.statusCode);
-        }
+        if (response.statusCode == 402) {}
       }
     } catch (e) {
-      print(e);
       throw ('Not working');
     }
     return [];

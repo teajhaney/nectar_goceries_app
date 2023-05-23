@@ -1,21 +1,20 @@
-// ignore_for_file: depend_on_referenced_packages
-
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:nectar_groceries_app/provider/api_provider.dart';
 
 import '/all_path.dart';
 
-class ShopScreen extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
 
   @override
-  State<ShopScreen> createState() => _ShopScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ShopScreenState();
 }
 
-class _ShopScreenState extends State<ShopScreen>
+class _ShopScreenState extends ConsumerState<ShopScreen>
     with AutomaticKeepAliveClientMixin {
-  final AsyncMemoizer _memoizer = AsyncMemoizer();
   final _searchController = TextEditingController();
 
   // late Future<List<ProductsApiModel>> _futureProductApi;
@@ -28,6 +27,7 @@ class _ShopScreenState extends State<ShopScreen>
   @override
   void initState() {
     callApi();
+
     super.initState();
   }
 
@@ -35,6 +35,9 @@ class _ShopScreenState extends State<ShopScreen>
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    final exclusiveProducts = ref.watch(exclusiveProductProvider);
+    final bestSellingProducts = ref.watch(bestSellingProductProvider);
+    final groceriesProducts = ref.watch(groceriesProductProvider);
     super.build(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -43,6 +46,7 @@ class _ShopScreenState extends State<ShopScreen>
           padding: const EdgeInsets.only(
               left: AppSize.s20, top: AppSize.s20, right: AppSize.s20),
           child: Column(
+            key: const PageStorageKey('ShopScreen'),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
@@ -83,38 +87,24 @@ class _ShopScreenState extends State<ShopScreen>
                     style: getSemiBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.fs20),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      'See all',
-                      style: getMediumStyle(
-                          color: ColorManager.green, fontSize: FontSize.fs16),
-                    ),
-                  ),
                 ],
               ),
               const Gap(20),
-              FutureBuilder<List<ProductsApiModel>>(
-                  future: respository.exclusiveProductApi(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<ProductsApiModel>> snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('${snapshot.hasError}'),
-                      );
-                    } else if (snapshot.data != null) {
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text("No Product to display"));
-                      }
-                      return ProductList(products: snapshot.data!);
-                    }
-
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: Color(0xff18B762),
-                    ));
-                  }),
+              exclusiveProducts.when(
+                data: (List<ProductsApiModel> value) {
+                  return ProductList(products: value);
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xff18B762),
+                  ),
+                ),
+                error: (error, stackTrace) {
+                  return const Center(
+                      child: Text(
+                          "No Product to display")); // Display the error message
+                },
+              ),
               const Gap(20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,38 +114,24 @@ class _ShopScreenState extends State<ShopScreen>
                     style: getSemiBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.fs20),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      'See all',
-                      style: getMediumStyle(
-                          color: ColorManager.green, fontSize: FontSize.fs16),
-                    ),
-                  ),
                 ],
               ),
               const Gap(20),
-              FutureBuilder<List<ProductsApiModel>>(
-                  future: respository.bestSellingProductApi(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<ProductsApiModel>> snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('${snapshot.hasError}'),
-                      );
-                    } else if (snapshot.data != null) {
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text("No Product to display"));
-                      }
-                      return ProductList(products: snapshot.data!);
-                    }
-
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: Color(0xff18B762),
-                    ));
-                  }),
+              bestSellingProducts.when(
+                data: (List<ProductsApiModel> value) {
+                  return ProductList(products: value);
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xff18B762),
+                  ),
+                ),
+                error: (error, stackTrace) {
+                  return const Center(
+                      child: Text(
+                          "No Product to display")); // Display the error message
+                },
+              ),
               const Gap(20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,63 +141,28 @@ class _ShopScreenState extends State<ShopScreen>
                     style: getSemiBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.fs20),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      'See all',
-                      style: getMediumStyle(
-                          color: ColorManager.green, fontSize: FontSize.fs16),
-                    ),
-                  ),
                 ],
               ),
               const Gap(20),
-              FutureBuilder<List<ProductsApiModel>>(
-                  future: respository.groceriesProductApi(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<ProductsApiModel>> snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('${snapshot.hasError}'),
-                      );
-                    } else if (snapshot.data != null) {
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text("No Product to display"));
-                      }
-                      return ProductList(products: snapshot.data!);
-                    }
-
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: Color(0xff18B762),
-                    ));
-                  }),
+              groceriesProducts.when(
+                data: (List<ProductsApiModel> value) {
+                  return ProductList(products: value);
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xff18B762),
+                  ),
+                ),
+                error: (error, stackTrace) {
+                  return const Center(
+                      child: Text(
+                          "No Product to display")); // Display the error message
+                },
+              ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<List<ProductsApiModel>>? fetchExclisiveProductApiOnce() {
-    _memoizer.runOnce(() async {
-      return respository.exclusiveProductApi();
-    });
-    return null;
-  }
-
-  Future<List<ProductsApiModel>>? fetchBestSellingProductApiOnce() {
-    _memoizer.runOnce(() async {
-      return respository.bestSellingProductApi();
-    });
-    return null;
-  }
-
-  Future<List<ProductsApiModel>>? fetchGroceriesProductApiOnce() {
-    _memoizer.runOnce(() async {
-      return respository.groceriesProductApi();
-    });
-    return null;
   }
 }

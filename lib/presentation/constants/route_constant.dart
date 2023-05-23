@@ -5,4 +5,5 @@ class RouteConstants {
   static String loginScreen = "login_screen";
   static String navScreen = "nav_screen";
   static String productDetailsScreen = "product_details_screen";
+  static String orderCompletedScreen = "order_completed_screen";
 }

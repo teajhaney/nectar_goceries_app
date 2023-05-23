@@ -15,7 +15,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = ref.watch(cartListProvider);
-    final totalPrice = ref.watch(totalAmountProvider);
+    final totalPrice = ref.read(totalAmountProvider);
     return (cart.list.isEmpty)
         ? Padding(
             padding: const EdgeInsets.only(
@@ -73,6 +73,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                               price: cart.list[index].price!,
                               count: cart.list[index].count!,
                               image: cart.list[index].image!,
+                              index: index,
                             )),
                         separatorBuilder: (BuildContext context, int index) =>
                             const Divider(),
@@ -84,31 +85,50 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             floatingActionButton: Padding(
               padding:
                   const EdgeInsets.only(left: AppSize.s40, right: AppSize.s20),
-              child: Container(
-                  height: 70,
-                  width: double.maxFinite,
-                  alignment: Alignment.center,
-                  decoration: ShapeDecoration(
+              child: GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                      elevation: 0,
+                      isDismissible: false,
                       shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(AppSize.s20))),
-                      color: ColorManager.green),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        StringManager.goToCheckOut,
-                        style: getRegularStyle(
-                            color: ColorManager.white, fontSize: FontSize.fs20),
-                      ),
-                      const Gap(20),
-                      Text(
-                        '\$$totalPrice'.substring(0, 7),
-                        style: getRegularStyle(
-                            color: ColorManager.black, fontSize: FontSize.fs20),
-                      ),
-                    ],
-                  )),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      context: context,
+                      builder: (context) {
+                        return BottomSheetWidget(
+                          totalprice: totalPrice,
+                        );
+                      });
+                },
+                child: Container(
+                    height: 70,
+                    width: double.maxFinite,
+                    alignment: Alignment.center,
+                    decoration: ShapeDecoration(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(AppSize.s20))),
+                        color: ColorManager.green),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          StringManager.goToCheckOut,
+                          style: getRegularStyle(
+                              color: ColorManager.white,
+                              fontSize: FontSize.fs20),
+                        ),
+                        const Gap(20),
+                        Text(
+                          '\$$totalPrice'.substring(0, 7),
+                          style: getRegularStyle(
+                              color: ColorManager.black,
+                              fontSize: FontSize.fs20),
+                        ),
+                      ],
+                    )),
+              ),
             ),
           );
   }

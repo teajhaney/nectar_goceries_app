@@ -3,6 +3,7 @@ class StringManager {
   static String subWelcome = 'Get your grecoeries as fast as possible';
   static String getStarted = 'Get Started';
   static String login = 'Log in';
+  static String logout = 'Log out';
   static String enterEmailAndPassword = 'Enter your emails and password';
   static String email = 'Email';
   static String password = 'Password';
@@ -18,4 +19,8 @@ class StringManager {
   static String goToCheckOut = 'Go to Check out';
   static String myCart = 'My Cart';
   static String favorite = 'Favorite';
+  static String placeOrder = 'Place Order';
+  static String termsAndCondition =
+      'By Placing an order, you agree to our Terms and Conditions';
+  static String backHome = 'Back to shop';
 }

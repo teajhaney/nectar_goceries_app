@@ -4,15 +4,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../all_path.dart';
 
-class ProductList extends ConsumerWidget {
+class ProductList extends ConsumerStatefulWidget {
   final List<ProductsApiModel> products;
 
-  ProductList({super.key, required this.products});
-
-  final _controller = ScrollController();
+  const ProductList({super.key, required this.products});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProductListState();
+}
+
+class _ProductListState extends ConsumerState<ProductList> {
+  final _controller = ScrollController();
+
+  Set<int> selectedProductIndex = <int>{};
+  void toggleFavorite(int index) {
+    setState(() {
+      if (selectedProductIndex.contains(index)) {
+        selectedProductIndex.remove(index);
+      } else {
+        selectedProductIndex.add(index);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final favoriteItem = ref.read(favoriteListProvider);
     return SizedBox(
       height: 250,
@@ -20,11 +36,12 @@ class ProductList extends ConsumerWidget {
       child: ListView.builder(
           controller: _controller,
           shrinkWrap: true,
-          itemCount: products.length,
+          itemCount: widget.products.length,
           scrollDirection: Axis.horizontal,
           physics: const ScrollPhysics(),
           itemBuilder: (BuildContext context, index) {
-            var product = products[index];
+            var product = widget.products[index];
+            final isClicked = selectedProductIndex.contains(index);
 
             return Padding(
               padding: const EdgeInsets.only(right: 20),
@@ -88,6 +105,7 @@ class ProductList extends ConsumerWidget {
                                   count: 1,
                                 );
                                 showSnackBar(context, 'Added to favorite');
+                                toggleFavorite(index);
                               },
                               child: Container(
                                 height: 50,
@@ -96,8 +114,10 @@ class ProductList extends ConsumerWidget {
                                   color: ColorManager.green,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: const Center(
-                                  child: Icon(Icons.add),
+                                child: Center(
+                                  child: isClicked
+                                      ? const Icon(Icons.check)
+                                      : const Icon(Icons.add),
                                 ),
                               ),
                             )

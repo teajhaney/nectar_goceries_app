@@ -26,7 +26,7 @@ class Cart {
     map['id'] = id;
     map['title'] = title;
     map['image'] = image;
-    map['count'] = 1;
+    map['count'] = count;
     return map;
   }
 

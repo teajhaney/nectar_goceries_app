@@ -84,31 +84,50 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
             floatingActionButton: Padding(
               padding:
                   const EdgeInsets.only(left: AppSize.s40, right: AppSize.s20),
-              child: Container(
-                  height: 70,
-                  width: double.maxFinite,
-                  alignment: Alignment.center,
-                  decoration: ShapeDecoration(
+              child: GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                      elevation: 0,
+                      isDismissible: false,
                       shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(AppSize.s20))),
-                      color: ColorManager.green),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        StringManager.goToCheckOut,
-                        style: getRegularStyle(
-                            color: ColorManager.white, fontSize: FontSize.fs20),
-                      ),
-                      const Gap(20),
-                      Text(
-                        '\$$totalPrice'.substring(0, 7),
-                        style: getRegularStyle(
-                            color: ColorManager.black, fontSize: FontSize.fs20),
-                      ),
-                    ],
-                  )),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      context: context,
+                      builder: (context) {
+                        return BottomSheetWidget(
+                          totalprice: totalPrice,
+                        );
+                      });
+                },
+                child: Container(
+                    height: 70,
+                    width: double.maxFinite,
+                    alignment: Alignment.center,
+                    decoration: ShapeDecoration(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(AppSize.s20))),
+                        color: ColorManager.green),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          StringManager.goToCheckOut,
+                          style: getRegularStyle(
+                              color: ColorManager.white,
+                              fontSize: FontSize.fs20),
+                        ),
+                        const Gap(20),
+                        Text(
+                          '\$$totalPrice'.substring(0, 7),
+                          style: getRegularStyle(
+                              color: ColorManager.black,
+                              fontSize: FontSize.fs20),
+                        ),
+                      ],
+                    )),
+              ),
             ),
           );
   }
