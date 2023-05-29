@@ -27,21 +27,13 @@ class CartTile extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _CartTileState();
 }
 
-class _CartTileState extends ConsumerState<CartTile> {
-  _incremmentCounter() {
-    setState(() {
-      widget.count++;
-    });
-  }
-
-  _decremmentCounter() {
-    setState(() {
-      widget.count--;
-    });
-  }
-
+class _CartTileState extends ConsumerState<CartTile>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final cart = ref.read(cartListProvider);
     return SizedBox(
       height: 100,
@@ -67,7 +59,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                   Row(
                     children: [
                       IconButton(
-                          onPressed: _decremmentCounter,
+                          onPressed: () => cart.decrement(widget.index),
                           icon: Icon(
                             Icons.remove,
                             color: ColorManager.grey,
@@ -90,7 +82,7 @@ class _CartTileState extends ConsumerState<CartTile> {
                       ),
                       const Gap(5),
                       IconButton(
-                          onPressed: _incremmentCounter,
+                          onPressed: () => cart.increment(widget.index),
                           icon: Icon(
                             Icons.add,
                             color: ColorManager.green,
@@ -119,7 +111,7 @@ class _CartTileState extends ConsumerState<CartTile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, AppMargin.m10),
                 child: Text(
-                  '\$${widget.count * widget.price}'.substring(0, 5).toString(),
+                  '\$${widget.count * widget.price}'.substring(0, 7).toString(),
                   style: getBoldStyle(color: ColorManager.black),
                 ),
               ),

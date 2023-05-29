@@ -65,13 +65,14 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         ),
                       ),
                     ),
+                    const Divider(),
                     Expanded(
                       child: ListView.separated(
                         itemBuilder: ((context, index) => CartTile(
                               id: cart.list[index].id!,
                               title: cart.list[index].title!,
                               price: cart.list[index].price!,
-                              count: cart.list[index].count!,
+                              count: cart.list[index].count,
                               image: cart.list[index].image!,
                               index: index,
                             )),

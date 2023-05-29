@@ -13,7 +13,8 @@ class ProductList extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ProductListState();
 }
 
-class _ProductListState extends ConsumerState<ProductList> {
+class _ProductListState extends ConsumerState<ProductList>
+    with AutomaticKeepAliveClientMixin {
   final _controller = ScrollController();
 
   Set<int> selectedProductIndex = <int>{};
@@ -28,7 +29,10 @@ class _ProductListState extends ConsumerState<ProductList> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final favoriteItem = ref.read(favoriteListProvider);
     return SizedBox(
       height: 250,
@@ -96,17 +100,26 @@ class _ProductListState extends ConsumerState<ProductList> {
                                   fontSize: FontSize.fs20),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                favoriteItem.addToFavoriteProduct(
-                                  title: product.title,
-                                  image: product.image,
-                                  productId: product.id,
-                                  price: product.price,
-                                  count: 1,
-                                );
-                                showSnackBar(context, 'Added to favorite');
-                                toggleFavorite(index);
-                              },
+                              onTap: !isClicked
+                                  ? () {
+                                      favoriteItem.addToFavoriteProduct(
+                                        title: product.title,
+                                        image: product.image,
+                                        productId: product.id,
+                                        price: product.price,
+                                        count: 1,
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                      showSnackBar(
+                                          context, 'Added to favorite');
+                                      toggleFavorite(index);
+                                    }
+                                  : () {
+                                      toggleFavorite(index);
+                                      favoriteItem.removeFromFavoriteProduct(
+                                          product.id);
+                                    },
                               child: Container(
                                 height: 50,
                                 width: 50,

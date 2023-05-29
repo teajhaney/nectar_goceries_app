@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/all_path.dart';
@@ -17,7 +19,7 @@ final totalAmountProvider = StateProvider<double>((ref) {
   final cartList = ref.watch(cartListProvider).list;
   double totalAmount = 0.0;
   for (var item in cartList) {
-    totalAmount += (item.price ?? 0.0) * (item.count ?? 0);
+    totalAmount += (item.price ?? 0.0) * (item.count);
   }
   return totalAmount;
 });
@@ -28,39 +30,55 @@ final cartListProvider = ChangeNotifierProvider((ref) {
 
 class CartList extends ChangeNotifier {
   List<Cart> list = [];
+  int counts = 0;
 
-  void addToCart(
-      {required String title,
-      required String image,
-      required int productId,
-      required double price,
-      required int count}) {
-    // if (list.contains(productId)) {
-    //   list.removeAt(productId);
-    //   list.insert(
-    //       productId,
-    //       Cart(
-    //         id: productId,
-    //         title: title,
-    //         price: price,
-    //         count: count + 1,
-    //         image: image,
-    //       ));
-    //   notifyListeners();
-    // } else {
-    list.add(Cart(
-      id: productId,
-      title: title,
-      price: price,
-      count: count,
-      image: image,
-    ));
+  int itemLCount(List<Cart> itemsList) {
+    int counts = 0;
+    for (var item in itemsList) {
+      counts += item.count;
+    }
+    return counts;
+  }
+
+  Future<void> addToCart({
+    required String title,
+    required String image,
+    required int productId,
+    required double price,
+    required int count,
+  }) async {
+    final int itemIndex = list.indexWhere((element) => element.id == productId);
+    if (itemIndex >= 0) {
+      list[itemIndex].count += 1;
+    } else {
+      list.add(
+        Cart(
+          id: productId,
+          title: title,
+          price: price,
+          image: image,
+          count: count,
+        ),
+      );
+    }
     notifyListeners();
+  }
+
+  void increment(int index) {
+    list[index].count = list[index].count + 1;
+    notifyListeners();
+  }
+
+  void decrement(int index) {
+    if (list[index].count > 1) {
+      list[index].count = list[index].count - 1;
+      notifyListeners();
+    }
   }
 
   void removeFromCart(int index) {
     // ignore: list_remove_unrelated_type
-    list.remove(index);
+    list.removeAt(index);
     notifyListeners();
   }
 }

@@ -9,6 +9,7 @@ import '../all_path.dart';
 class FavoriteTile extends ConsumerStatefulWidget {
   FavoriteTile({
     super.key,
+    required this.index,
     required this.id,
     required this.title,
     required this.price,
@@ -18,6 +19,7 @@ class FavoriteTile extends ConsumerStatefulWidget {
   String title;
   double price;
   String image;
+  int index;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _FavoriteTileState();
@@ -26,6 +28,7 @@ class FavoriteTile extends ConsumerStatefulWidget {
 class _FavoriteTileState extends ConsumerState<FavoriteTile> {
   @override
   Widget build(BuildContext context) {
+    final favorite = ref.read(favoriteListProvider);
     return SizedBox(
       height: 100,
       width: double.infinity,
@@ -49,9 +52,24 @@ class _FavoriteTileState extends ConsumerState<FavoriteTile> {
           const Gap(10),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, AppMargin.m10),
-            child: Text(
-              '\$${widget.price}'.substring(0, 5).toString(),
-              style: getBoldStyle(color: ColorManager.black),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    favorite.removeFromFavoriteProduct(widget.index);
+                  },
+                  child: Text(
+                    'X',
+                    style: getSemiBoldStyle(
+                        color: ColorManager.grey, fontSize: FontSize.fs20),
+                  ),
+                ),
+                Text(
+                  '\$${widget.price}'.substring(0, 5).toString(),
+                  style: getBoldStyle(color: ColorManager.black),
+                ),
+              ],
             ),
           )
         ],

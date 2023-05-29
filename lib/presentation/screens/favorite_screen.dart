@@ -66,9 +66,11 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                         ),
                       ),
                     ),
+                    const Divider(),
                     Expanded(
                       child: ListView.separated(
                         itemBuilder: ((context, index) => FavoriteTile(
+                              index: index,
                               id: cart.list[index].id!,
                               title: cart.list[index].title!,
                               price: cart.list[index].price!,
