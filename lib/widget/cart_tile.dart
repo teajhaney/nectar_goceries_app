@@ -18,7 +18,7 @@ class CartTile extends ConsumerStatefulWidget {
   });
   int? id;
   String title;
-  double price;
+  int price;
   String image;
   late int count;
   int index;
@@ -96,6 +96,7 @@ class _CartTileState extends ConsumerState<CartTile>
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               GestureDetector(
                 onTap: () {
@@ -111,7 +112,7 @@ class _CartTileState extends ConsumerState<CartTile>
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, AppMargin.m10),
                 child: Text(
-                  '\$${widget.count * widget.price}'.substring(0, 7).toString(),
+                  '\$${widget.count * widget.price}'.toString(),
                   style: getBoldStyle(color: ColorManager.black),
                 ),
               ),

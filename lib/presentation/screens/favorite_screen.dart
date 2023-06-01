@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:nectar_groceries_app/widget/favorite_tile.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../all_path.dart';
 
@@ -13,6 +14,7 @@ class FavoriteScreen extends ConsumerStatefulWidget {
 }
 
 class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
+  var uuid = const Uuid();
   @override
   Widget build(BuildContext context) {
     final cart = ref.watch(favoriteListProvider);
@@ -71,7 +73,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                       child: ListView.separated(
                         itemBuilder: ((context, index) => FavoriteTile(
                               index: index,
-                              id: cart.list[index].id!,
+                              id: uuid.v4(),
                               title: cart.list[index].title!,
                               price: cart.list[index].price!,
                               image: cart.list[index].image!,
@@ -122,7 +124,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                         ),
                         const Gap(20),
                         Text(
-                          '\$$totalPrice'.substring(0, 7),
+                          '\$$totalPrice',
                           style: getRegularStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.fs20),

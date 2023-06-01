@@ -20,17 +20,6 @@ class _ShopScreenState extends ConsumerState<ShopScreen>
   // late Future<List<ProductsApiModel>> _futureProductApi;
   late ApiRespository respository;
 
-  callApi() {
-    respository = ApiRespository();
-  }
-
-  @override
-  void initState() {
-    callApi();
-
-    super.initState();
-  }
-
   @override
   bool get wantKeepAlive => true;
   @override

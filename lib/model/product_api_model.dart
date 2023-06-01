@@ -1,5 +1,5 @@
 class ProductsApiModel {
-  int id;
+  int id = DateTime.now().millisecondsSinceEpoch;
   String title;
   double price;
   String description;
@@ -19,7 +19,7 @@ class ProductsApiModel {
     return ProductsApiModel(
       id: json['id'],
       title: json['title'] ?? '',
-      price: json['price'].toDouble() ?? 0,
+      price: json['price'] ?? 0,
       description: json['description'] ?? '',
       image: json['image'] ?? '',
       likes: json['likes'],

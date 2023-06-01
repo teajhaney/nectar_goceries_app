@@ -17,17 +17,6 @@ class _ProductListState extends ConsumerState<ProductList>
     with AutomaticKeepAliveClientMixin {
   final _controller = ScrollController();
 
-  Set<int> selectedProductIndex = <int>{};
-  void toggleFavorite(int index) {
-    setState(() {
-      if (selectedProductIndex.contains(index)) {
-        selectedProductIndex.remove(index);
-      } else {
-        selectedProductIndex.add(index);
-      }
-    });
-  }
-
   @override
   bool get wantKeepAlive => true;
   @override
@@ -45,7 +34,7 @@ class _ProductListState extends ConsumerState<ProductList>
           physics: const ScrollPhysics(),
           itemBuilder: (BuildContext context, index) {
             var product = widget.products[index];
-            final isClicked = selectedProductIndex.contains(index);
+            final isFavorite = favoriteItem.isFavorite(product.id);
 
             return Padding(
               padding: const EdgeInsets.only(right: 20),
@@ -100,25 +89,33 @@ class _ProductListState extends ConsumerState<ProductList>
                                   fontSize: FontSize.fs20),
                             ),
                             GestureDetector(
-                              onTap: !isClicked
+                              onTap: isFavorite
                                   ? () {
+                                      favoriteItem.removeFromFavoriteProduct(
+                                          product.id);
+                                      setState(() {
+                                        favoriteItem.toggleFavorite(product.id);
+                                      });
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                      showSnackBar(
+                                          context, 'Removed from favorites');
+                                    }
+                                  : () {
                                       favoriteItem.addToFavoriteProduct(
                                         title: product.title,
                                         image: product.image,
                                         productId: product.id,
-                                        price: product.price,
+                                        price: product.price.toInt(),
                                         count: 1,
                                       );
+                                      setState(() {
+                                        favoriteItem.toggleFavorite(product.id);
+                                      });
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
                                       showSnackBar(
                                           context, 'Added to favorite');
-                                      toggleFavorite(index);
-                                    }
-                                  : () {
-                                      toggleFavorite(index);
-                                      favoriteItem.removeFromFavoriteProduct(
-                                          product.id);
                                     },
                               child: Container(
                                 height: 50,
@@ -128,7 +125,7 @@ class _ProductListState extends ConsumerState<ProductList>
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Center(
-                                  child: isClicked
+                                  child: isFavorite
                                       ? const Icon(Icons.check)
                                       : const Icon(Icons.add),
                                 ),

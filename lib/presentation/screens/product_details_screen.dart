@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:nectar_groceries_app/all_path.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 class ProductDetailsScreen extends ConsumerStatefulWidget {
   const ProductDetailsScreen({super.key, required this.products});
@@ -30,6 +31,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final cartItem = ref.read(cartListProvider);
+    final favoriteItem = ref.read(favoriteListProvider);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -91,7 +93,17 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     style: getBoldStyle(color: ColorManager.black),
                   ),
                   IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        favoriteItem.addToFavoriteProduct(
+                          title: widget.products.title,
+                          image: widget.products.image,
+                          productId: widget.products.id,
+                          price: widget.products.price.toInt(),
+                          count: 1,
+                        );
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        showSnackBar(context, 'Added to favorite');
+                      },
                       icon: Icon(
                         Icons.favorite_border,
                         color: ColorManager.grey,
@@ -215,9 +227,10 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                       title: widget.products.title,
                       image: widget.products.image,
                       productId: widget.products.id,
-                      price: widget.products.price,
+                      price: widget.products.price.toInt(),
                       count: _counter,
                     );
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     showSnackBar(context, 'Added to cart');
                   },
                   child: Container(

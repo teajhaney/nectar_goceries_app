@@ -8,8 +8,8 @@ final apiProvider = Provider<ApiRespository>(
 );
 
 class ApiRespository {
-  String apiKey = 'c69d1e5487374899be9d082adfc25d44';
-  //c69d1e5487374899be9d082adfc25d44
+  String apiKey = '69bc9b2d77bb4dd1938a2509913916c5';
+
   String baseUrl = 'https://api.spoonacular.com';
   int number = 10;
   Future<List<ProductsApiModel>> exclusiveProductApi() async {

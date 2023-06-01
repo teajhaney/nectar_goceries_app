@@ -9,7 +9,7 @@ class FavoriteProduct {
 
   int? id;
   String? title;
-  double? price;
+  int? price;
   String? image;
   int? count;
 }

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/all_path.dart';
-import 'package:tuple/tuple.dart';
 
-final totalAmountInfavoriteProvider = StateProvider((ref) {
-  return ref
-      .watch(favoriteListProvider)
-      .list
-      .map((e) => Tuple2(e.price!, e.count!))
-      .fold<double>(
-          0.0,
-          (previousValue, element) =>
-              previousValue + element.item1 * element.item2);
+final totalAmountInfavoriteProvider = StateProvider<double>((ref) {
+  final favoritetList = ref.watch(favoriteListProvider).list;
+  double totalAmount = 0.0;
+  for (var item in favoritetList) {
+    totalAmount += (item.price ?? 0.0) * (item.count!);
+  }
+  return totalAmount;
 });
 
 final favoriteListProvider = ChangeNotifierProvider((ref) {
@@ -21,19 +18,24 @@ final favoriteListProvider = ChangeNotifierProvider((ref) {
 class FavoriteProductList extends ChangeNotifier {
   List<FavoriteProduct> list = [];
   int counts = 0;
-  int itemLCount(List<Cart> itemsList) {
+
+  int itemLCount(List<FavoriteProduct> itemsList) {
     int counts = 0;
     for (var item in itemsList) {
-      counts += item.count;
+      counts += item.count!;
     }
     return counts;
   }
+
+  final Set<int> _favoriteIndex = {};
+
+  Set<int> get favoriteIndex => _favoriteIndex;
 
   Future<void> addToFavoriteProduct({
     required String title,
     required String image,
     required int productId,
-    required double price,
+    required int price,
     required int count,
   }) async {
     final int itemIndex = list.indexWhere((element) => element.id == productId);
@@ -46,44 +48,30 @@ class FavoriteProductList extends ChangeNotifier {
           title: title,
           price: price,
           image: image,
-          count: 1,
+          count: counts,
         ),
       );
     }
     notifyListeners();
   }
 
-  // void addToFavoriteProduct({
-  //   required String title,
-  //   required String image,
-  //   required int productId,
-  //   required double price,
-  //   required int count,
-  // }) {
-  //   // if (list.contains(productId)) {
-  //   //   list.removeAt(productId);
-  //   //   list.insert(
-  //   //       productId,
-  //   //       FavoriteProduct(
-  //   //         id: productId,
-  //   //         title: title,
-  //   //         price: price,
-  //   //         count: count + 1,
-  //   //         image: image,
-  //   //       ));
-  //   //   notifyListeners();
-  //   // } else {
-  //   list.add(FavoriteProduct(
-  //     id: productId,
-  //     title: title,
-  //     price: price,
-  //     count: count,
-  //     image: image,
-  //   ));
-  //   notifyListeners();
-  // }
+  void toggleFavorite(int item) {
+    if (_favoriteIndex.contains(item)) {
+      _favoriteIndex.remove(item);
+      removeFromFavoriteProduct(item);
+    } else {
+      _favoriteIndex.add(item);
+      addToFavoriteProduct;
+    }
+    notifyListeners();
+  }
+
+  bool isFavorite(int item) {
+    return _favoriteIndex.contains(item);
+  }
 
   void removeFromFavoriteProduct(int index) {
+    _favoriteIndex.remove(index);
     list.removeAt(index);
     notifyListeners();
   }

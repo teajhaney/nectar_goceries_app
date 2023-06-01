@@ -44,7 +44,7 @@ class CartList extends ChangeNotifier {
     required String title,
     required String image,
     required int productId,
-    required double price,
+    required int price,
     required int count,
   }) async {
     final int itemIndex = list.indexWhere((element) => element.id == productId);

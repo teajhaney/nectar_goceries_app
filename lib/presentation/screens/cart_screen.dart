@@ -122,7 +122,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         ),
                         const Gap(20),
                         Text(
-                          '\$$totalPrice'.substring(0, 7),
+                          '\$$totalPrice'.toString(),
                           style: getRegularStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.fs20),
