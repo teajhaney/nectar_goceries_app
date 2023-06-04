@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:nectar_groceries_app/all_path.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 class ProductDetailsScreen extends ConsumerStatefulWidget {
   const ProductDetailsScreen({super.key, required this.products});
@@ -32,6 +31,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
   Widget build(BuildContext context) {
     final cartItem = ref.read(cartListProvider);
     final favoriteItem = ref.read(favoriteListProvider);
+    bool isFavorite = favoriteItem.isFavorite(widget.products.id);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -93,22 +93,29 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     style: getBoldStyle(color: ColorManager.black),
                   ),
                   IconButton(
+                      color:
+                          isFavorite ? ColorManager.green : ColorManager.grey,
                       onPressed: () {
-                        favoriteItem.addToFavoriteProduct(
-                          title: widget.products.title,
-                          image: widget.products.image,
-                          productId: widget.products.id,
-                          price: widget.products.price.toInt(),
-                          count: 1,
-                        );
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        showSnackBar(context, 'Added to favorite');
+                        favoriteItem.toggleFavorite(
+                            title: widget.products.title,
+                            image: widget.products.image,
+                            productId: widget.products.id,
+                            price: widget.products.price.toInt(),
+                            count: 1,
+                            context: context);
+                        setState(() {
+                          isFavorite = true;
+                        });
                       },
-                      icon: Icon(
-                        Icons.favorite_border,
-                        color: ColorManager.grey,
-                        size: 25,
-                      )),
+                      icon: isFavorite
+                          ? const Icon(
+                              Icons.favorite,
+                              size: 25,
+                            )
+                          : const Icon(
+                              Icons.favorite_border,
+                              size: 25,
+                            )),
                 ],
               ),
             ),

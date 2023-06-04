@@ -17,6 +17,7 @@ final favoriteListProvider = ChangeNotifierProvider((ref) {
 
 class FavoriteProductList extends ChangeNotifier {
   List<FavoriteProduct> list = [];
+
   int counts = 0;
 
   int itemLCount(List<FavoriteProduct> itemsList) {
@@ -27,20 +28,21 @@ class FavoriteProductList extends ChangeNotifier {
     return counts;
   }
 
-  final Set<int> _favoriteIndex = {};
-
-  Set<int> get favoriteIndex => _favoriteIndex;
-
-  Future<void> addToFavoriteProduct({
+  toggleFavorite({
     required String title,
     required String image,
     required int productId,
     required int price,
     required int count,
-  }) async {
+    required BuildContext context,
+  }) {
     final int itemIndex = list.indexWhere((element) => element.id == productId);
+
     if (itemIndex >= 0) {
-      list[itemIndex].count = 1;
+      list.removeWhere((element) => element.id == productId);
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      showSnackBar(context, 'Remove from favorite');
     } else {
       list.add(
         FavoriteProduct(
@@ -51,27 +53,17 @@ class FavoriteProductList extends ChangeNotifier {
           count: counts,
         ),
       );
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      showSnackBar(context, 'Added to favorite');
     }
     notifyListeners();
   }
 
-  void toggleFavorite(int item) {
-    if (_favoriteIndex.contains(item)) {
-      _favoriteIndex.remove(item);
-      removeFromFavoriteProduct(item);
-    } else {
-      _favoriteIndex.add(item);
-      addToFavoriteProduct;
-    }
-    notifyListeners();
-  }
-
-  bool isFavorite(int item) {
-    return _favoriteIndex.contains(item);
+  bool isFavorite(int productId) {
+    return list.any((item) => item.id == productId);
   }
 
   void removeFromFavoriteProduct(int index) {
-    _favoriteIndex.remove(index);
     list.removeAt(index);
     notifyListeners();
   }

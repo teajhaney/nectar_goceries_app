@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../all_path.dart';
 
@@ -13,15 +14,13 @@ class ProductList extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ProductListState();
 }
 
-class _ProductListState extends ConsumerState<ProductList>
-    with AutomaticKeepAliveClientMixin {
+class _ProductListState extends ConsumerState<ProductList> {
   final _controller = ScrollController();
 
-  @override
-  bool get wantKeepAlive => true;
+  var uuid = const Uuid();
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     final favoriteItem = ref.read(favoriteListProvider);
     return SizedBox(
       height: 250,
@@ -34,7 +33,7 @@ class _ProductListState extends ConsumerState<ProductList>
           physics: const ScrollPhysics(),
           itemBuilder: (BuildContext context, index) {
             var product = widget.products[index];
-            final isFavorite = favoriteItem.isFavorite(product.id);
+            bool isFavorite = favoriteItem.isFavorite(product.id);
 
             return Padding(
               padding: const EdgeInsets.only(right: 20),
@@ -89,34 +88,19 @@ class _ProductListState extends ConsumerState<ProductList>
                                   fontSize: FontSize.fs20),
                             ),
                             GestureDetector(
-                              onTap: isFavorite
-                                  ? () {
-                                      favoriteItem.removeFromFavoriteProduct(
-                                          product.id);
-                                      setState(() {
-                                        favoriteItem.toggleFavorite(product.id);
-                                      });
-                                      ScaffoldMessenger.of(context)
-                                          .hideCurrentSnackBar();
-                                      showSnackBar(
-                                          context, 'Removed from favorites');
-                                    }
-                                  : () {
-                                      favoriteItem.addToFavoriteProduct(
-                                        title: product.title,
-                                        image: product.image,
-                                        productId: product.id,
-                                        price: product.price.toInt(),
-                                        count: 1,
-                                      );
-                                      setState(() {
-                                        favoriteItem.toggleFavorite(product.id);
-                                      });
-                                      ScaffoldMessenger.of(context)
-                                          .hideCurrentSnackBar();
-                                      showSnackBar(
-                                          context, 'Added to favorite');
-                                    },
+                              onTap: () {
+                                favoriteItem.toggleFavorite(
+                                  context: context,
+                                  title: product.title,
+                                  image: product.image,
+                                  productId: product.id,
+                                  price: product.price.toInt(),
+                                  count: 1,
+                                );
+                                setState(() {
+                                  isFavorite = true;
+                                });
+                              },
                               child: Container(
                                 height: 50,
                                 width: 50,
