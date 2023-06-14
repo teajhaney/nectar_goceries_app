@@ -14,7 +14,8 @@ class ProductList extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ProductListState();
 }
 
-class _ProductListState extends ConsumerState<ProductList> {
+class _ProductListState extends ConsumerState<ProductList>
+    with SingleTickerProviderStateMixin {
   final _controller = ScrollController();
 
   var uuid = const Uuid();
@@ -87,33 +88,49 @@ class _ProductListState extends ConsumerState<ProductList> {
                                   color: ColorManager.black,
                                   fontSize: FontSize.fs20),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                favoriteItem.toggleFavorite(
-                                  context: context,
-                                  title: product.title,
-                                  image: product.image,
-                                  productId: product.id,
-                                  price: product.price.toInt(),
-                                  count: 1,
-                                );
-                                setState(() {
-                                  isFavorite = true;
-                                });
-                              },
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color: ColorManager.green,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Center(
-                                  child: isFavorite
-                                      ? const Icon(Icons.check)
-                                      : const Icon(Icons.add),
+                            Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: ColorManager.green,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 500),
+                                child: IconButton(
+                                  enableFeedback: false,
+                                  splashRadius: 0.1,
+                                  key: ValueKey<bool>(isFavorite),
+                                  icon: Icon(
+                                    isFavorite ? Icons.check : Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    favoriteItem.toggleFavorite(
+                                      context: context,
+                                      title: product.title,
+                                      image: product.image,
+                                      productId: product.id,
+                                      price: product.price.toInt(),
+                                      count: 1,
+                                    );
+                                    setState(() {
+                                      isFavorite = true;
+                                    });
+                                  },
                                 ),
                               ),
+
+                              // child: Center(
+                              //   child: AnimatedSwitcher(
+                              //     duration:
+                              //         const Duration(milliseconds: 1000),
+                              //     child: isFavorite
+                              //         ? const Icon(Icons.check)
+                              //         : const Icon(Icons.add),
+                              //   ),
+                              // ),
                             )
                           ],
                         )

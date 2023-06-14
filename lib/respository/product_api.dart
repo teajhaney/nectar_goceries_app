@@ -8,7 +8,7 @@ final apiProvider = Provider<ApiRespository>(
 );
 
 class ApiRespository {
-  String apiKey = '6152e9a769f2456ead935012476d441c';
+  String apiKey = 'bd8529a91c6a4afdb0c3ecf05d7325ee';
 
   String baseUrl = 'https://api.spoonacular.com';
   int number = 10;

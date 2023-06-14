@@ -92,30 +92,35 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     '${widget.products.title.substring(0, 15)}...',
                     style: getBoldStyle(color: ColorManager.black),
                   ),
-                  IconButton(
-                      color:
-                          isFavorite ? ColorManager.green : ColorManager.grey,
-                      onPressed: () {
-                        favoriteItem.toggleFavorite(
-                            title: widget.products.title,
-                            image: widget.products.image,
-                            productId: widget.products.id,
-                            price: widget.products.price.toInt(),
-                            count: 1,
-                            context: context);
-                        setState(() {
-                          isFavorite = true;
-                        });
-                      },
-                      icon: isFavorite
-                          ? const Icon(
-                              Icons.favorite,
-                              size: 25,
-                            )
-                          : const Icon(
-                              Icons.favorite_border,
-                              size: 25,
-                            )),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: IconButton(
+                        splashRadius: 0.1,
+                        key: ValueKey<bool>(isFavorite),
+                        color:
+                            isFavorite ? ColorManager.green : ColorManager.grey,
+                        onPressed: () {
+                          favoriteItem.toggleFavorite(
+                              title: widget.products.title,
+                              image: widget.products.image,
+                              productId: widget.products.id,
+                              price: widget.products.price.toInt(),
+                              count: 1,
+                              context: context);
+                          setState(() {
+                            isFavorite = true;
+                          });
+                        },
+                        icon: isFavorite
+                            ? const Icon(
+                                Icons.favorite,
+                                size: 25,
+                              )
+                            : const Icon(
+                                Icons.favorite_border,
+                                size: 25,
+                              )),
+                  ),
                 ],
               ),
             ),
