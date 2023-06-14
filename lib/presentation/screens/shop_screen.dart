@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:nectar_groceries_app/provider/api_provider.dart';
 
 import '/all_path.dart';
 

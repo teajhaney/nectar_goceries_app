@@ -1,9 +1,7 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/all_path.dart';
-import 'package:tuple/tuple.dart';
 
 // final totalAmountProvider = StateProvider((ref) {
 //   return ref
