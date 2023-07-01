@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../all_path.dart';
 
-class BottomSheetWidget extends StatelessWidget {
+class BottomSheetWidget extends ConsumerStatefulWidget {
   final double totalprice;
-  const BottomSheetWidget({
-    super.key,
-    required this.totalprice,
-  });
+  const BottomSheetWidget({super.key, required this.totalprice});
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _BottomSheetWidgetState();
+}
+
+class _BottomSheetWidgetState extends ConsumerState<BottomSheetWidget> {
+  @override
   Widget build(BuildContext context) {
+    final cartList = ref.read(cartListProvider);
     return Padding(
       padding: const EdgeInsets.only(bottom: AppMargin.m20),
       child: Column(
@@ -86,7 +91,7 @@ class BottomSheetWidget extends StatelessWidget {
                   color: ColorManager.grey, fontSize: FontSize.fs20),
             ),
             trailing: Text(
-              '\$$totalprice'.substring(0, 7),
+              '\$$widget.totalprice',
               style: getSemiBoldStyle(
                   color: ColorManager.black, fontSize: FontSize.fs20),
             ),
@@ -104,8 +109,12 @@ class BottomSheetWidget extends StatelessWidget {
           ),
           const Gap(20),
           GestureDetector(
-            onTap: () =>
-                context.replaceNamed(RouteConstants.orderCompletedScreen),
+            onTap: () {
+              context.replaceNamed(RouteConstants.orderCompletedScreen);
+              setState(() {
+                cartList.list = [];
+              });
+            },
             child: Padding(
               padding:
                   const EdgeInsets.only(left: AppSize.s20, right: AppSize.s20),

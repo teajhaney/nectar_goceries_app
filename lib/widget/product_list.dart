@@ -95,11 +95,9 @@ class _ProductListState extends ConsumerState<ProductList>
                                 color: ColorManager.green,
                                 borderRadius: BorderRadius.circular(20),
                               ),
-
                               child: AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 500),
                                 child: IconButton(
-                                  enableFeedback: false,
                                   splashRadius: 0.1,
                                   key: ValueKey<bool>(isFavorite),
                                   icon: Icon(
@@ -121,16 +119,6 @@ class _ProductListState extends ConsumerState<ProductList>
                                   },
                                 ),
                               ),
-
-                              // child: Center(
-                              //   child: AnimatedSwitcher(
-                              //     duration:
-                              //         const Duration(milliseconds: 1000),
-                              //     child: isFavorite
-                              //         ? const Icon(Icons.check)
-                              //         : const Icon(Icons.add),
-                              //   ),
-                              // ),
                             )
                           ],
                         )

@@ -15,7 +15,7 @@ class FavoriteTile extends ConsumerStatefulWidget {
     required this.price,
     required this.image,
   });
-  String? id;
+  int? id;
   String title;
   int price;
   String image;
@@ -28,11 +28,19 @@ class FavoriteTile extends ConsumerStatefulWidget {
 class _FavoriteTileState extends ConsumerState<FavoriteTile> {
   @override
   Widget build(BuildContext context) {
-    final favorite = ref.read(favoriteListProvider);
+    final favorite = ref.watch(favoriteListProvider);
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
         favorite.removeFromFavoriteProduct(widget.index);
+
+        // favorite.toggleFavorite(
+        //     title: widget.title,
+        //     image: widget.image,
+        //     productId: widget.id!,
+        //     price: widget.price,
+        //     count: 1,
+        //     context: context);
       },
       background: Container(
         color: ColorManager.green,
