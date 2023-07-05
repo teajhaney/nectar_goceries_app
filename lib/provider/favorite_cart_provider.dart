@@ -6,7 +6,7 @@ final totalAmountInfavoriteProvider = StateProvider<double>((ref) {
   final favoritetList = ref.watch(favoriteListProvider).list;
   double totalAmount = 0.0;
   for (var item in favoritetList) {
-    totalAmount += (item.price ?? 0.0) * (item.count!);
+    totalAmount += (item.price!) * (item.count);
   }
   return totalAmount;
 });
@@ -17,16 +17,6 @@ final favoriteListProvider = ChangeNotifierProvider((ref) {
 
 class FavoriteProductList extends ChangeNotifier {
   List<FavoriteProduct> list = [];
-
-  int counts = 0;
-
-  int itemLCount(List<FavoriteProduct> itemsList) {
-    int counts = 0;
-    for (var item in itemsList) {
-      counts += item.count!;
-    }
-    return counts;
-  }
 
   toggleFavorite({
     required String title,
@@ -50,12 +40,13 @@ class FavoriteProductList extends ChangeNotifier {
           title: title,
           price: price,
           image: image,
-          count: counts,
+          count: 1,
         ),
       );
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       showSnackBar(context, 'Added to favorite');
     }
+
     notifyListeners();
   }
 

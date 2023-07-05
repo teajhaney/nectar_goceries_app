@@ -5,20 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../all_path.dart';
 
-class BottomSheetWidget extends ConsumerStatefulWidget {
+class FavoriteBottomSheetWidget extends ConsumerStatefulWidget {
   final double totalprice;
-  const BottomSheetWidget({super.key, required this.totalprice});
+  const FavoriteBottomSheetWidget({super.key, required this.totalprice});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _BottomSheetWidgetState();
+      _FavoriteBottomSheetWidgetState();
 }
 
-class _BottomSheetWidgetState extends ConsumerState<BottomSheetWidget> {
+class _FavoriteBottomSheetWidgetState
+    extends ConsumerState<FavoriteBottomSheetWidget> {
   @override
   Widget build(BuildContext context) {
-    final cartList = ref.read(cartListProvider);
-
+    final favoriteList = ref.watch(favoriteListProvider);
     return Padding(
       padding: const EdgeInsets.only(bottom: AppMargin.m20),
       child: Column(
@@ -113,7 +113,7 @@ class _BottomSheetWidgetState extends ConsumerState<BottomSheetWidget> {
             onTap: () {
               context.replaceNamed(RouteConstants.orderCompletedScreen);
               setState(() {
-                cartList.list = [];
+                favoriteList.list = [];
               });
             },
             child: Padding(

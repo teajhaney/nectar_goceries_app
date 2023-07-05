@@ -22,7 +22,7 @@ class _ProductListState extends ConsumerState<ProductList>
 
   @override
   Widget build(BuildContext context) {
-    final favoriteItem = ref.read(favoriteListProvider);
+    final favoriteItem = ref.watch(favoriteListProvider);
     return SizedBox(
       height: 250,
       width: double.infinity,

@@ -41,7 +41,7 @@ dependencies:
   google_fonts: ^4.0.4
   google_nav_bar: ^5.0.6
   http: ^0.13.5
-  tuple: ^2.0.1
+  tuple: ^2.0.2
   uuid: ^3.0.7
 
 dev_dependencies:

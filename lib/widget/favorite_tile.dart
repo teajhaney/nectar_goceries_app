@@ -33,14 +33,6 @@ class _FavoriteTileState extends ConsumerState<FavoriteTile> {
       key: UniqueKey(),
       onDismissed: (direction) {
         favorite.removeFromFavoriteProduct(widget.index);
-
-        // favorite.toggleFavorite(
-        //     title: widget.title,
-        //     image: widget.image,
-        //     productId: widget.id!,
-        //     price: widget.price,
-        //     count: 1,
-        //     context: context);
       },
       background: Container(
         color: ColorManager.green,

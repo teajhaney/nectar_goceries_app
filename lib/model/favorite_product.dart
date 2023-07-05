@@ -11,5 +11,5 @@ class FavoriteProduct {
   String? title;
   int? price;
   String? image;
-  int? count;
+  int count;
 }

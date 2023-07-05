@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -16,7 +15,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = ref.watch(cartListProvider);
-    final totalPrice = ref.read(totalAmountProvider);
+    final totalPrice = ref.watch(totalAmountProvider);
     return (cart.list.isEmpty)
         ? Padding(
             padding: const EdgeInsets.only(
@@ -123,7 +122,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         ),
                         const Gap(20),
                         Text(
-                          '\$$totalPrice'.toString(),
+                          '\$$totalPrice',
                           style: getRegularStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.fs20),

@@ -99,7 +99,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                               topRight: Radius.circular(20))),
                       context: context,
                       builder: (context) {
-                        return BottomSheetWidget(
+                        return FavoriteBottomSheetWidget(
                           totalprice: totalPrice,
                         );
                       });
