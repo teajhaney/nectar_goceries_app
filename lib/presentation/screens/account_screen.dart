@@ -3,14 +3,16 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nectar_groceries_app/all_path.dart';
 
-class AccountScreen extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class AccountScreen extends ConsumerStatefulWidget {
   const AccountScreen({super.key});
 
   @override
-  State<AccountScreen> createState() => _AccountScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AccountScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen> {
+class _AccountScreenState extends ConsumerState<AccountScreen> {
   bool _isLoading = false;
   void logoutUser() async {
     setState(() {
@@ -27,6 +29,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
     setState(() {
       _isLoading = false;
+      ref.read(cartListProvider).list = [];
+      ref.read(favoriteListProvider).list = [];
     });
     if (!mounted) return;
     showSnackBar(context, 'Logged out succesfully');

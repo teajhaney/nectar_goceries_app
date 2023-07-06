@@ -4,7 +4,7 @@ import '/all_path.dart';
 
 final totalAmountProvider = StateProvider<double>((ref) {
   final cartList = ref.watch(cartListProvider).list;
-  double totalAmount = 0.0;
+  double totalAmount = 0;
   for (var item in cartList) {
     totalAmount += (item.price!) * (item.count);
   }

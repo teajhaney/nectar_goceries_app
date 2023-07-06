@@ -83,7 +83,7 @@ class _ProductListState extends ConsumerState<ProductList>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '\$${product.price.toString().substring(0, 4)}',
+                              '\$${product.price.round().toString()}',
                               style: getSemiBoldStyle(
                                   color: ColorManager.black,
                                   fontSize: FontSize.fs20),

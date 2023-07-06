@@ -92,7 +92,7 @@ class _BottomSheetWidgetState extends ConsumerState<BottomSheetWidget> {
                   color: ColorManager.grey, fontSize: FontSize.fs20),
             ),
             trailing: Text(
-              '\$${widget.totalprice}',
+              '\$${widget.totalprice.round()}',
               style: getSemiBoldStyle(
                   color: ColorManager.black, fontSize: FontSize.fs20),
             ),

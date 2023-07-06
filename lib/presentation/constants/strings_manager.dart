@@ -18,6 +18,7 @@ class StringManager {
   static String likes = 'Like(s)';
   static String goToCheckOut = 'Go to Check out';
   static String myCart = 'My Cart';
+  static String myFavCart = 'My Favorite Cart';
   static String favorite = 'Favorite';
   static String placeOrder = 'Place Order';
   static String termsAndCondition =

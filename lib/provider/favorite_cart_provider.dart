@@ -4,7 +4,7 @@ import '/all_path.dart';
 
 final totalAmountInfavoriteProvider = StateProvider<double>((ref) {
   final favoritetList = ref.watch(favoriteListProvider).list;
-  double totalAmount = 0.0;
+  double totalAmount = 0;
   for (var item in favoritetList) {
     totalAmount += (item.price!) * (item.count);
   }

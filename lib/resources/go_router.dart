@@ -8,7 +8,7 @@ class AppRouter {
     routes: <GoRoute>[
       GoRoute(
         name: RouteConstants.splashScreen,
-        path: '/splashScreen',
+        path: '/',
         builder: (BuildContext context, GoRouterState state) =>
             const SplashScreen(),
       ),
@@ -38,7 +38,7 @@ class AppRouter {
       ),
       GoRoute(
         name: RouteConstants.navScreen,
-        path: '/',
+        path: '/navScreen',
         builder: (BuildContext context, GoRouterState state) =>
             const NavScreen(),
       ),
