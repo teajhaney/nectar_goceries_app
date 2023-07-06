@@ -63,7 +63,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                       width: double.infinity,
                       child: Center(
                         child: Text(
-                          StringManager.myCart,
+                          StringManager.myFavCart,
                           style: getBoldStyle(color: ColorManager.black),
                         ),
                       ),
