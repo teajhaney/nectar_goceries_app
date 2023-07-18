@@ -33,7 +33,7 @@ class ProductsApiModel {
     data['price'] = price;
     data['description'] = description;
     data['image'] = image;
-    data['likes'] = likes;
+    data['ilikes'] = likes;
     return data;
   }
 }

@@ -12,11 +12,11 @@ class NavScreen extends StatefulWidget {
 class _NavScreenState extends State<NavScreen>
     with AutomaticKeepAliveClientMixin {
   final List<Widget> _screens = const [
-    ShopScreen(key: PageStorageKey('ShopScreen')),
-    ExploreScreen(key: PageStorageKey('ExploreScreen')),
-    CartScreen(key: PageStorageKey('CartScreen')),
-    FavoriteScreen(key: PageStorageKey('FavoriteScreen')),
-    AccountScreen(key: PageStorageKey('AacountScreen')),
+    ShopScreen(),
+    ExploreScreen(),
+    CartScreen(),
+    FavoriteScreen(),
+    AccountScreen(),
   ];
   final Map<String, IconData> _icons = const {
     'Shop': Icons.shopping_bag_outlined,
@@ -31,7 +31,10 @@ class _NavScreenState extends State<NavScreen>
     super.build(context);
     return SafeArea(
       child: Scaffold(
-          body: _screens[_currentIndex],
+          body: IndexedStack(
+            index: _currentIndex,
+            children: _screens,
+          ),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
               color: ColorManager.white,
